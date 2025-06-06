@@ -1,0 +1,5 @@
+package com.example.novel_backend.Enum;
+
+public enum Role {
+    USER, ADMIN
+}
