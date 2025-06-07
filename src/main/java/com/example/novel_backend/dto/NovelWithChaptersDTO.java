@@ -7,16 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NovelDTO {
+public class NovelWithChaptersDTO {
     private Long id;
     private String title;
     private String description;
-    private boolean isDeleted;
+    private boolean deleted;
     private NovelStatus status;
     private LocalDateTime createdAt;
     
@@ -24,9 +25,15 @@ public class NovelDTO {
     private Long authorId;
     private String authorName;
     
-    // Cover image information
+    // Cover image
     private Long coverImageId;
     
-    // Tags
-    private String[] tags;
+    // Chapter information
+    private List<ChapterDTO> chapters;
+    
+    // Total views (calculated from chapters)
+    private Long totalViews;
+    
+    // Total chapters
+    private Integer totalChapters;
 } 

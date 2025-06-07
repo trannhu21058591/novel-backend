@@ -35,6 +35,9 @@ public class Chapter {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "views", nullable = false)
+    private Long views = 0L;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "novel_id", nullable = false)
     private Novel novel;

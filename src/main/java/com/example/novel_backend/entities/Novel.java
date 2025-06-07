@@ -22,7 +22,7 @@ public class Novel {
     private Long id;
     private String title;
     private String description;
-    private Long views;
+
     private boolean isDeleted;
 
     @Enumerated(EnumType.STRING)
