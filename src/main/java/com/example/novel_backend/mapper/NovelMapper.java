@@ -1,6 +1,7 @@
 package com.example.novel_backend.mapper;
 
 import com.example.novel_backend.dto.NovelDTO;
+import com.example.novel_backend.dto.NovelSummaryDTO;
 import com.example.novel_backend.dto.NovelWithChaptersDTO;
 import com.example.novel_backend.dto.ChapterDTO;
 import com.example.novel_backend.entities.Novel;
@@ -76,4 +77,27 @@ public class NovelMapper {
                 .totalChapters(totalChapters)
                 .build();
     }
+
+    public NovelSummaryDTO toSummaryDTO(Novel novel) {
+        if (novel == null) {
+            return null;
+        }
+
+        long totalViews = novel.getChapters() != null
+                ? novel.getChapters().stream().mapToLong(ch -> ch.getViews()).sum()
+                : 0;
+
+        long totalChapters = novel.getChapters() != null
+                ? novel.getChapters().size()
+                : 0;
+
+        return NovelSummaryDTO.builder()
+                .id(novel.getId())
+                .title(novel.getTitle())
+                .coverImageBase64(novel.getCoverImage() != null ? novel.getCoverImage().getData() : null)
+                .totalViews(totalViews)
+                .totalChapters(totalChapters)
+                .build();
+    }
+
 } 

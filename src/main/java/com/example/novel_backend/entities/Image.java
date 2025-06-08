@@ -23,7 +23,8 @@ public class Image {
     private Long id;
 
     @NotBlank
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String data; // Base64 encoded image data
 
     @NotNull
