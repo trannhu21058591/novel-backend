@@ -42,10 +42,10 @@ public class Chapter {
     @JoinColumn(name = "novel_id", nullable = false)
     private Novel novel;
 
-    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChapterParagraph> paragraphs;
 
-    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vote> votes;
 
     @PrePersist

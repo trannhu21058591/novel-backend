@@ -5,14 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChapterDTO {
+public class CommentContentDTO {
     private Long id;
-    private String title;
-    private Integer chapterNumber;
-    private Long views;
-
-} 
+    private String content;
+    private Long userId;
+    private String userName;
+    private LocalDateTime createdAt;
+}

@@ -19,4 +19,9 @@ public class NovelService {
     public List<Novel> getAllNovels() {
         return novelRepository.findAll();
     }
+
+    public Novel getNovelById(Long id) {
+        return novelRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Novel not found with id: " + id));
+    }
 }

@@ -1,6 +1,5 @@
 package com.example.novel_backend.mapper;
 
-import com.example.novel_backend.dto.NovelDTO;
 import com.example.novel_backend.dto.NovelSummaryDTO;
 import com.example.novel_backend.dto.NovelWithChaptersDTO;
 import com.example.novel_backend.dto.ChapterDTO;
@@ -13,29 +12,6 @@ import java.util.stream.Collectors;
 @Component
 public class NovelMapper {
     
-    public NovelDTO toDTO(Novel novel) {
-        if (novel == null) {
-            return null;
-        }
-        
-        return NovelDTO.builder()
-                .id(novel.getId())
-                .title(novel.getTitle())
-                .description(novel.getDescription())
-                .isDeleted(novel.isDeleted())
-                .status(novel.getStatus())
-                .createdAt(novel.getCreatedAt())
-                .authorId(novel.getAuthor() != null ? novel.getAuthor().getId() : null)
-                .authorName(novel.getAuthor() != null ? novel.getAuthor().getProfileName() : null)
-                .coverImageId(novel.getCoverImage() != null ? novel.getCoverImage().getId() : null)
-                .tags(novel.getTags() != null ? 
-                    novel.getTags().stream()
-                        .map(tag -> tag.getName())
-                        .toArray(String[]::new) 
-                    : new String[0])
-                .build();
-    }
-
     public NovelWithChaptersDTO toDTOWithChapters(Novel novel) {
         if (novel == null) {
             return null;
@@ -97,7 +73,16 @@ public class NovelMapper {
                 .coverImageBase64(novel.getCoverImage() != null ? novel.getCoverImage().getData() : null)
                 .totalViews(totalViews)
                 .totalChapters(totalChapters)
+                .isDeleted(novel.isDeleted())
+                .status(novel.getStatus())
+                .createdAt(novel.getCreatedAt())
+                .authorId(novel.getAuthor() != null ? novel.getAuthor().getId() : null)
+                .authorName(novel.getAuthor() != null ? novel.getAuthor().getProfileName() : null)
+                .tags(novel.getTags() != null ? 
+                    novel.getTags().stream()
+                        .map(tag -> tag.getName())
+                        .toArray(String[]::new) 
+                    : new String[0])
                 .build();
     }
-
 } 

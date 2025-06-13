@@ -7,10 +7,7 @@ import com.example.novel_backend.mapper.NovelMapper;
 import com.example.novel_backend.services.NovelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +29,14 @@ public class NovelController {
         return ResponseEntity.ok(dtoList);
     }
 
+    @GetMapping("/novels/{id}")
+    public ResponseEntity<NovelWithChaptersDTO> getNovelById(@PathVariable Long id) {
+        Novel novel = novelService.getNovelById(id);
+        if (novel.isDeleted()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(novelMapper.toDTOWithChapters(novel));
+    }
 
     @GetMapping("/search")
     public ResponseEntity<List<NovelWithChaptersDTO>> searchNovels(@RequestParam String keyword) {
