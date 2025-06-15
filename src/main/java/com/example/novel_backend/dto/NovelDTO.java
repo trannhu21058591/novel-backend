@@ -11,21 +11,30 @@ import java.util.List;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class NovelSummaryDTO {
+@AllArgsConstructor
+public class NovelDTO {
     private Long id;
     private String title;
-    private String coverImageBase64;
-    private Long totalViews;
-    private Long totalChapters;
-    private boolean isDeleted;
+    private String description;
+
+    private boolean deleted;
     private NovelStatus status;
     private LocalDateTime createdAt;
-    // Author information
+
+    // Author info
     private Long authorId;
     private String authorName;
-    
+
+    // Cover image
+    private Long coverImageId;
+    private String coverImageBase64;
+
     // Tags
     private String[] tags;
+
+    // Chapter info
+    private List<ChapterDTO> chapters;
+    private Long totalViews;
+    private Long totalChapters;
 }

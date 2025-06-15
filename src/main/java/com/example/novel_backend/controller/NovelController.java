@@ -1,7 +1,7 @@
 package com.example.novel_backend.controller;
 
-import com.example.novel_backend.dto.NovelSummaryDTO;
-import com.example.novel_backend.dto.NovelWithChaptersDTO;
+import com.example.novel_backend.dto.NovelDTO;
+
 import com.example.novel_backend.entities.Novel;
 import com.example.novel_backend.mapper.NovelMapper;
 import com.example.novel_backend.services.NovelService;
@@ -20,29 +20,29 @@ public class NovelController {
     private final NovelMapper novelMapper;
 
     @GetMapping("/novels")
-    public ResponseEntity<List<NovelSummaryDTO>> getAllNovels() {
+    public ResponseEntity<List<NovelDTO>> getAllNovels() {
         List<Novel> novels = novelService.getAllNovels();
-        List<NovelSummaryDTO> dtoList = novels.stream()
-                .filter(novel -> !novel.isDeleted()) // lọc nếu cần
-                .map(novelMapper::toSummaryDTO)
+        List<NovelDTO> dtoList = novels.stream()
+                .filter(novel -> !novel.isDeleted())
+                .map(novelMapper::toNovelDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/novels/{id}")
-    public ResponseEntity<NovelWithChaptersDTO> getNovelById(@PathVariable Long id) {
+    public ResponseEntity<NovelDTO> getNovelById(@PathVariable Long id) {
         Novel novel = novelService.getNovelById(id);
         if (novel.isDeleted()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(novelMapper.toDTOWithChapters(novel));
+        return ResponseEntity.ok(novelMapper.toNovelDTO(novel));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<NovelWithChaptersDTO>> searchNovels(@RequestParam String keyword) {
+    public ResponseEntity<List<NovelDTO>> searchNovels(@RequestParam String keyword) {
         List<Novel> novels = novelService.searchByTitle(keyword);
-        List<NovelWithChaptersDTO> novelDTOs = novels.stream()
-                .map(novelMapper::toDTOWithChapters)
+        List<NovelDTO> novelDTOs = novels.stream()
+                .map(novelMapper::toNovelDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(novelDTOs);
     }
